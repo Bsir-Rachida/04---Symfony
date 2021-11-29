@@ -1,13 +1,21 @@
-@import "~bootstrap/scss/bootstrap";
 
-$primary: #c12408;
+// assets/styles/global.scss
 
-$secondary: #d4c7ba;
+// customize some Bootstrap variables
+$primary: #ff0022;
+
+$light: #bdaa96;
 
 $dark:#0D0D0D;
 
+$navbar-light-hover-color: $light;
+$navbar-light-active-color:  $light;
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
 
 .logo{
-    width: 1rem;
-    height: 1rem;
-}
+    width: 30px;
+    height:30px;
+}   
+
