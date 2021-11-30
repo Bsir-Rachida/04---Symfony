@@ -73,7 +73,7 @@ public function show(string $categoryName):Response
 
     return $this->render('/category/show.html.twig', [
 
-        'category' => $categoryName,
+        'categoryName' => $categoryName,
         'programs' => $programs
 
     ]);
