@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Saison #{{ program.id }}{% endblock %}
+
+
+{% block body %}
+
+    <div class="media">
+
+       
+
+        <div class="media-body">
+        <h1 class="mt-0">Saison :{{ season.number }}</h1> <h2 class="mt-0">{{ program.title }}</h2>
+
+            <p> La saison {{ season.number }} de la catégorie {{program.category.name }} a été lancé le {{ season.year}} </p> 
+            
+            <p>{{ program.summary }}  </p>
+
+
+
+        </div>
+
+             {% for episode in season.episodes %}
+
+            <h1 class="mt-0">Episode :{{ episode.number }}</h1>
+
+            <p>Titre : {{episode.title }}</p>
+
+            <p>Resumé: {{episode.synopsis }}</p>
+
+            {% else %}
+
+       Pas d'episode disponible.
+
+    {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <a href="{{ path('program_index') }}">
+
+        Retour à la liste des programmes
+
+    </a>
+
+{% endblock %}

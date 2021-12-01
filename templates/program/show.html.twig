@@ -18,6 +18,23 @@
 
             <p>Catégorie : {{ program.category.name }}</p>
 
+             {% for season in seasons %}
+
+            <h1 class="mt-0">Saison :{{ season.number }}</h1>
+
+            <p>Année :{{ season.year }}</p>
+
+            <p>Description : {{season.description }}</p>
+
+
+      <a href="{{ path('program_season_show',{programId: season.program.id, seasonId: season.id }) }}">Voir la fiche</a>
+
+            {% else %}
+
+       Pas de saison disponible.
+
+    {% endfor %}
+
         </div>
 
     </div>
