@@ -39,7 +39,7 @@ class Program
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/plus belle la vie/",
-     *     match=true,
+     *     match=false,
      *     message="On parle de vraies séries ici")
      * 
      */
@@ -177,22 +177,17 @@ class Program
         return $this->actors;
     }
 
-    public function addActor(Actor $actor): self
+    public function addActor(Actor $actor)
     {
-        if (!$this->actors->contains($actor)) {
-            $this->actors[] = $actor;
-            $actor->addProgram($this);
-        }
 
-        return $this;
+        if ($this->actors->contains($actor)) {
+            return;
+        }
+        $this->actors[] = $actor;
     }
 
-    public function removeActor(Actor $actor): self
+    public function removeActor(Actor $actor)
     {
-        if ($this->actors->removeElement($actor)) {
-            $actor->removeProgram($this);
-        }
-
-        return $this;
+        $this->actors->removeElement($actor);
     }
 }

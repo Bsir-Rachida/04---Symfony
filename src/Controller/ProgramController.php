@@ -98,23 +98,10 @@ class ProgramController extends AbstractController
 
         $seasons = $this->getDoctrine()->getRepository(Season::class)->findBy(['program' => $program], ['number' => 'ASC']);
 
-        if (!$seasons) {
-
-            throw $this->createNotFoundException(
-
-                'No program found . '
-            );
-        }
 
         $actors = $this->getDoctrine()->getRepository(Actor::class)->find($program);
 
-        if (!$seasons) {
-
-            throw $this->createNotFoundException(
-
-                'No program found . '
-            );
-        }
+ 
 
 
         return $this->render('program/show.html.twig', [
