@@ -15,11 +15,12 @@ class CategoryFixtures extends Fixture
 
 {
     const CATEGORIES =[
+        
+        'Horreur',
         'Action',
         'Aventure',
         'Animation',
         'Fantastique',
-        'Horreur',
     ];
 
     public function load(ObjectManager $manager)
@@ -31,9 +32,14 @@ class CategoryFixtures extends Fixture
 
         $category = new Category();  
 
-        $category->setName($catagoryName);  
+        $category->setName($catagoryName); 
 
-        $manager->persist($category);  
+
+        $manager->persist($category); 
+       
+        
+         
+        $this->setReference('category_' . $key, $category);
 
     }  
 
