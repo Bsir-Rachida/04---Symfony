@@ -4,7 +4,7 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Actor;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
@@ -106,10 +106,22 @@ class ProgramController extends AbstractController
             );
         }
 
+        $actors = $this->getDoctrine()->getRepository(Actor::class)->find($program);
+
+        if (!$seasons) {
+
+            throw $this->createNotFoundException(
+
+                'No program found . '
+            );
+        }
+
+
         return $this->render('program/show.html.twig', [
 
             'program' => $program,
             'seasons' => $seasons,
+            'actors' => $actors,
 
         ]);
     }

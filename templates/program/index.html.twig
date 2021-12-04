@@ -6,21 +6,16 @@
 
 {% block body %}
 
-    <h1>Toutes les séries de la table program : </h1>
+    <h1>Nos séries</h1>
+   {% for program in programs %}
 
-    {% for program in programs %}
-
-        <div>
-
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-
-            <p>{{ program.summary }}</p>
-
-            {# Lien vers la fiche de la série : #}
-
-            <a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
-
-        </div>
+    <div class="card">
+ <h2 class="card-header">{{ loop.index }} -  {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
+  <div class="card-body">
+    <p class="card-title"> {{ program.summary }}</p>
+    
+    <a href="{{ path("program_show", { id: program.id }) }}" class="btn btn-primary">Voir la fiche</a>
+  </div>
 
     {% else %}
 
@@ -28,12 +23,14 @@
 
     {% endfor %}
 
-	<a href="{{ path('app_index') }}">
+	<a href="{{ path('app_index') }}" class="btn btn-primary">
 
         Retour à l'accueil
 
     </a>
  
+</div>
+
  {% endblock %}
  
 
