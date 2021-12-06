@@ -12,6 +12,7 @@ class ActorFixtures extends Fixture
             'Norman Reedus',
             'Lauren Cohan',
             'Danai Gurira',
+            'Jason Reitman',
         ];
     
         public function load(ObjectManager $manager)

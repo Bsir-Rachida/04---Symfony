@@ -21,6 +21,7 @@ class CategoryFixtures extends Fixture
         'Aventure',
         'Animation',
         'Fantastique',
+        'Fantastique',
     ];
 
     public function load(ObjectManager $manager)
