@@ -60,7 +60,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
             $program->setTitle($programName['title']);
             $program->setSummary($programName['summary']);
-            $program->setSummary($programName['poster']);
+            $program->setPoster($programName['poster']);
             $program->setCategory($this->getReference($programName['category']));
             for ($i = 0; $i < count($programName['actors']); $i++) {
 

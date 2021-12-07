@@ -35,7 +35,7 @@ class Program
     private $summary;
 
        /**
-     * @ORM\Column(type="string", length=255, nullable=false) 
+     * @ORM\Column(type="string", length=255, nullable=true) 
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/plus belle la vie/",
@@ -47,7 +47,7 @@ class Program
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="programs")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $category;
 
@@ -57,7 +57,7 @@ class Program
     private $seasons;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer" ,nullable=true)
      */
     private $year;
 

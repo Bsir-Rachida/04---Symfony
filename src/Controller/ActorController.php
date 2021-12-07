@@ -37,13 +37,6 @@ class ActorController extends AbstractController
     {
         $programs = $this->getDoctrine()->getRepository(Program::class)->find($actor);
      
-        if (!$programs) {
-
-            throw $this->createNotFoundException(
-
-                'No program found . '
-            );
-        }
 
         return $this->render('actor/show.html.twig', [
 
