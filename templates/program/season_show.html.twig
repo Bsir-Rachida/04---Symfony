@@ -23,7 +23,7 @@
              {% for episode in season.episodes %}
 
             <h1 class="mt-0">Episode :{{ episode.number }}</h1>
-            <a href="{{ path('program_episode_show',{programId: program.id, seasonId: season.id, episodeId: episode.id }) }}"> en savoir plus </a>
+            <a href="{{ path('program_episode_show',{programId: program.slug, seasonId: season.id, episodeId: episode.slug }) }}"> en savoir plus </a>
 
     
 

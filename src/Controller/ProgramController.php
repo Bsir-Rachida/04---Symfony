@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use App\Service\Slugify;
 use App\Entity\Actor;
 use App\Entity\Episode;
 use App\Entity\Program;
@@ -14,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Form\ProgramType;
 use Symfony\Component\HttpFoundation\Request;
+
 /**
  * @Route("/program", name="program_")
  */
@@ -36,57 +38,49 @@ class ProgramController extends AbstractController
 
 
 
-        /**
+    /**
     
-         * The controller for the Program add form
+     * The controller for the Program add form
     
-         *
+     *
     
-         * @Route("/new", name="new")
+     * @Route("/new", name="new")
     
-         */
-    
-        public function new(Request $request)  : Response
-    
-        {
+     */
 
-            $program = new Program();
+   
+    public function new(Request $request, Slugify $slugify): Response
 
-    
-            $form = $this->createForm(ProgramType::class, $program);
-            $form->handleRequest($request);
-            if ($form->isSubmitted()&& $form->isValid()) {
+    {
+        $program = new Program();
 
-        
-        
-                $entityManager = $this->getDoctrine()->getManager();
-        
-              
-        
-                $entityManager->persist($program);
-        
-          
-        
-                $entityManager->flush();
-        
-              
-                return $this->redirectToRoute('program_index');
-        
-            }
-    
-            return $this->render('program/new.html.twig', [
-    
-                "form" => $form->createView(),
-    
-            ]);
-    
+        $form = $this->createForm(ProgramType::class, $program);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $slug = $slugify->generate($program->getTitle());
+
+            $program->setSlug($slug);
+
+            $entityManager->persist($program);
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('program_index');
         }
-    
+
+        return $this->render('program/new.html.twig', [
+
+            "form" => $form->createView(),
+
+        ]);
+    }
+
 
     /**
-     * Getting a program by id
-     *
-     * @Route("/show/{id<^[0-9]+$>}", name="show")
+     * @Route("/{slug}", name="show", methods={"GET"})
      * @return Response
      */
 
@@ -95,21 +89,10 @@ class ProgramController extends AbstractController
     {
 
 
-
-        $seasons = $this->getDoctrine()->getRepository(Season::class)->findBy(['program' => $program], ['number' => 'ASC']);
-
-
-        $actors = $this->getDoctrine()->getRepository(Actor::class)->find($program);
-
- 
-
-
         return $this->render('program/show.html.twig', [
 
             'program' => $program,
-            'seasons' => $seasons,
-            'actors' => $actors,
-
+            
         ]);
     }
 
@@ -132,13 +115,13 @@ class ProgramController extends AbstractController
         ]);
     }
 
-        /**
+    /**
      * Getting a program by seasonid
      *
      * @Route("/{programId}/seasons/{seasonId}/episode/{episodeId} ", name="episode_show")
-     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"programId": "id"}})
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"programId": "slug"}})
      * @ParamConverter("season", class="App\Entity\Season", options={"mapping": {"seasonId": "id"}})
-     * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episodeId": "id"}})
+     * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episodeId": "slug"}})
      * @return Response
      */
     public function showEpisode(Program $program, Season $season, Episode $episode): Response

@@ -9,7 +9,7 @@
   <div class="card-body">
     <h2 class="card-title">{{ loop.index }} -  {{ actor.name }}</h2>
 
-    <a href="{{ path("program_show", { id: program.id }) }}" >série  - {{ program.title }}</a>
+    <a href="{{ path("program_show", { slug: program.slug }) }}" >série  - {{ program.title }}</a>
   
     
   </div>
