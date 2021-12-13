@@ -1,0 +1,6 @@
+{% extends "layout.html.twig" %}
+{% block body %}
+<h1>Nouvelle épisode de la série  {{episode.season.program.title}} vient d'être publié</h1>
+<h2>Episode {{ episode.number }} : {{ episode.title }}</h2>
+<p>Résume: {{ episode.synopsis }}</p>
+{% endblock %}  

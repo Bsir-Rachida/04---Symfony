@@ -1,0 +1,26 @@
+
+
+ :root {
+    /* make the backend contents as wide as the browser window */
+    --body-max-width: 100%;
+    /* change the background color of the  */
+    --body-bg: #ece5dc;
+    --gray-200:#dbd1c3;
+    --sidebar-bg:#ff0022;
+    /* make the base font size smaller */
+    --font-size-base: 13px;
+    --sidebar-menu-icon-color: #e4dfd9;
+    --sidebar-menu-active-item-color:#0D0D0D;
+    --color-primary:#ff0022;
+    --table-thead-marker-color:#a59682;
+    --pagination-color:#a59682;
+    --bs-body-bg: #a39a8e;
+    --text-color-light:#a39a8e
+    /* remove all border radius to make corners straight */
+    --border-radius: 0px;
+}
+
+.page-item.active .page-link {
+    background-color:var(--color-primary);
+    border-color: var(--color-primary);
+}
