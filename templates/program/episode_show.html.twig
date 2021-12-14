@@ -10,6 +10,13 @@
     <li> Episode : {{ episode.number }} </li>  
     <li> {{ episode.title }} </li>
     <Li>{{ episode.synopsis }}</Li>
-</ul> 
+ 
+{% if app.user %}
 
+    {{ app.user.email }}
+    <li> Ajouter un commentaire : 
+    
+
+    {% endif %}
+</ul>
 {% endblock %}
