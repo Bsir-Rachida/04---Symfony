@@ -17,8 +17,18 @@ class DashboardController extends AbstractDashboardController
      * @Route("/admin", name="admin")
      */
     public function index(): Response
+
     {
-        return parent::index();
+        $program = $this->getDoctrine()->getRepository(Program::class)->count([]);
+        $episode = $this->getDoctrine()->getRepository(Episode::class)->count([]);
+        $season = $this->getDoctrine()->getRepository(Season::class)->count([]);
+ 
+        return $this->render('bundles//EasyAdminBundle/welcome.html.twig', [
+            'program' => $program,
+            'episode' => $episode,
+            'season' => $season,
+        ]);
+        
     }
     public function configureAssets(): Assets
     {

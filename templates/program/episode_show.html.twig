@@ -1,22 +1,28 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}Episode {{season.number}}{% endblock %}
+{% block title %}Episode
+	{{season.number}}
+{% endblock %}
 
 
 {% block body %}
 
-  <ul>
-    <li> Episode : {{ episode.number }} </li>  
-    <li> {{ episode.title }} </li>
-    <Li>{{ episode.synopsis }}</Li>
- 
-{% if app.user %}
+	<ul>
 
-    {{ app.user.email }}
-    <li> Ajouter un commentaire : 
-    
+		<li>
+			{{ episode.title }}
+		</li>
+		<Li>{{ episode.synopsis }}</Li>
 
-    {% endif %}
-</ul>
+		{% if app.user %}
+			<li>
+				Ajouter un commentaire :
+
+				{{ form_start(form) }}
+				{{ form_widget(form) }}
+				<button class="btn btn-primary">valider</button>
+				{{ form_end(form) }}
+			{% endif %}
+	</ul>
 {% endblock %}

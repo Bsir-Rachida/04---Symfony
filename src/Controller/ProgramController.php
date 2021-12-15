@@ -4,6 +4,10 @@
 
 namespace App\Controller;
 
+use App\Form\CommentType;
+
+
+use App\Entity\Comment;
 use App\Service\Slugify;
 use App\Entity\Actor;
 use App\Entity\Episode;
@@ -138,14 +142,17 @@ class ProgramController extends AbstractController
      * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episodeId": "slug"}})
      * @return Response
      */
-    public function showEpisode(Program $program, Season $season, Episode $episode): Response
+    public function showEpisode(Program $program, Season $season, Episode $episode, Request $request): Response
     {
-
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
         return $this->render('program/episode_show.html.twig', [
 
             'program' => $program,
             'season' => $season,
             'episode' => $episode,
+            'form' => $form->createView(),
         ]);
     }
 }
