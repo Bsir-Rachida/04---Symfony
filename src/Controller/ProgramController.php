@@ -149,14 +149,15 @@ class ProgramController extends AbstractController
         $form->handleRequest($request);
         $comment->setEpisode($episode);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($this->getUser()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $comment->setAuthor($this->getUser());
-                $entityManager->persist($comment);
-                $entityManager->flush();
-                return $this->redirect($request->getUri());
-            }
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $comment->setAuthor($this->getUser());
+            $comment->setEpisode($episode);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('program_index');
         }
+
             
         return $this->render('program/episode_show.html.twig', [
 
