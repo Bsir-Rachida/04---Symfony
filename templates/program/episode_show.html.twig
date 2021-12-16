@@ -23,6 +23,13 @@
 				{{ form_widget(form) }}
 				<button class="btn btn-primary">valider</button>
 				{{ form_end(form) }}
+
+
+				     {% for comment in episode.comments %}
+            Commentaire : {{ comment.comment }}</br>
+            Note : {{ comment.rate }}</br>
+            commentaire de : {{ comment.author.username }}</br>
+        {% endfor %}
 			{% endif %}
 	</ul>
 {% endblock %}

@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Program;
 use App\Entity\Season;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
+
 class DashboardController extends AbstractDashboardController
 {
     /**
@@ -30,10 +31,12 @@ class DashboardController extends AbstractDashboardController
         ]);
         
     }
+
     public function configureAssets(): Assets
     {
         return Assets::new()->addCssFile('css/admin.css');
     } 
+    
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -44,7 +47,7 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linktoDashboard('Acceuil', 'fa fa-home');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
-        yield MenuItem::linkToCrud('Séries', 'fas fa-folder-open', Program::class);
+        yield MenuItem::linkToCrud('Program', 'fas fa-folder-open', Program::class);
         yield MenuItem::linkToCrud('Episodes ', 'fas fa-folder-open', Episode::class);
         yield MenuItem::linkToCrud('Saisons ','fas fa-folder-open', Season::class);
     }

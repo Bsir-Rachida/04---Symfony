@@ -147,6 +147,17 @@ class ProgramController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
+        $comment->setEpisode($episode);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($this->getUser()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $comment->setAuthor($this->getUser());
+                $entityManager->persist($comment);
+                $entityManager->flush();
+                return $this->redirect($request->getUri());
+            }
+        }
+            
         return $this->render('program/episode_show.html.twig', [
 
             'program' => $program,
