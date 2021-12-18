@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Form\CommentType;
 
-
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use App\Entity\Comment;
 use App\Service\Slugify;
 use App\Entity\Actor;
@@ -67,6 +67,7 @@ class ProgramController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $slug = $slugify->generate($program->getTitle());
+            $program->setOwner($this->getUser());
 
             $program->setSlug($slug);
 
@@ -158,12 +159,37 @@ class ProgramController extends AbstractController
             return $this->redirectToRoute('program_index');
         }
 
-            
+
         return $this->render('program/episode_show.html.twig', [
 
             'program' => $program,
             'season' => $season,
             'episode' => $episode,
+            'form' => $form->createView(),
+        ]);
+    }
+    /**
+     * @Route("/{slug}/edit", name="edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Program $program, Slugify $slugify): Response
+    {
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if (!($this->getUser() == $program->getOwner())) {
+
+            // If not the owner, throws a 403 Access Denied exception
+
+            throw new AccessDeniedException('Only the owner can edit the program!');
+        }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $program->setSlug($slugify->generate($program->getTitle()));
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('program_index');
+        }
+
+        return $this->render('program/edit.html.twig', [
+            'program' => $program,
             'form' => $form->createView(),
         ]);
     }

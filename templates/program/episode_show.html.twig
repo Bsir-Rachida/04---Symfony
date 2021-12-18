@@ -8,28 +8,37 @@
 
 {% block body %}
 
-	<ul>
+<ul>
 
-		<li>
-			{{ episode.title }}
-		</li>
-		<Li>{{ episode.synopsis }}</Li>
+	<li>
+		{{ episode.title }}
+	</li>
+	<Li>{{ episode.synopsis }}</Li>
+
+	{% if app.user and is_granted("ROLE_CONTRIBUTOR") %}
+		
+		<h1>Ajouter un commentaire :</h1>
+        	{% for comment in episode.comments %}
+
+				<li>Commentaire :{{ comment.comment }}</br></li>
+				<li>Note :{{ comment.rate }}</br></li>
+		        <li>commentaire de :{{ comment.author.username }}</br></li>
+		      {% if is_granted("ROLE_ADMIN") or app.user is same as(comment.author) %}
+       			{% include "comment/_delete_form.html.twig" %}
+        	{% endif %}
+
+			{% endfor %}
 
 		{% if app.user %}
-			<li>
-				Ajouter un commentaire :
+			{{ form_start(form) }}
+			{{ form_widget(form) }}
+			<button class="btn btn-primary">valider</button>
+			{{ form_end(form) }}
+		
 
-				{{ form_start(form) }}
-				{{ form_widget(form) }}
-				<button class="btn btn-primary">valider</button>
-				{{ form_end(form) }}
+		{% endif %}
 
-
-				     {% for comment in episode.comments %}
-            Commentaire : {{ comment.comment }}</br>
-            Note : {{ comment.rate }}</br>
-            commentaire de : {{ comment.author.username }}</br>
-        {% endfor %}
-			{% endif %}
-	</ul>
+	{% endif %}
+	
 {% endblock %}
+

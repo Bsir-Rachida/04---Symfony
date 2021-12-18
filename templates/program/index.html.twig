@@ -1,37 +1,44 @@
-
 {% extends "base.html.twig" %}
 
-{% block title %}All programs{% endblock %}
+{% block title %}All programs
+{% endblock %}
 
 
 {% block body %}
 
-    <h1>Nos séries</h1>
-   {% for program in programs %}
+	<h1>Nos séries</h1>
+	{% for program in programs %}
 
-    <div class="card">
- <h2 class="card-header">{{ loop.index }} -  {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-  <div class="card-body">
-    <p class="card-title"> {{ program.summary }}</p>
-    
-    <a href="{{ path("program_show", { slug: program.slug }) }}" class="btn btn-primary">Voir la fiche</a>
-  </div>
+		<div class="card">
+			<h2 class="card-header">{{ loop.index }}
+				-
+				{{ program.title }}
+				- Catégorie :
+				{{ program.category.name }}</h2>
+			<div class="card-body">
+				<p class="card-title">
+					{{ program.summary }}</p>
 
-    {% else %}
+				<a href="{{ path("program_show", { slug: program.slug }) }}" class="btn btn-primary">Voir la fiche</a>
+			</div>
+			{% if is_granted("ROLE_ADMIN") %}
 
-        Aucune série trouvée.
+				<a href="{{ path('program_edit', { 'slug': program.slug} ) }}">Éditer</a>
 
-    {% endfor %}
+				{%endif%}
 
-	<a href="{{ path('app_index') }}" class="btn btn-primary">
+			{% else %}
 
-        Retour à l'accueil
+				Aucune série trouvée.
 
-    </a>
- 
-</div>
+			{% endfor %}
 
- {% endblock %}
- 
+			<a href="{{ path('app_index') }}" class="btn btn-primary">
 
+				Retour à l'accueil
 
+			</a>
+
+		</div>
+
+	{% endblock %}
