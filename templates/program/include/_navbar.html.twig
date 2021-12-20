@@ -22,15 +22,20 @@
 				</li>
 				<div class= "d-flex align-items-center " >
 				<li class="nav-item" >
-				{% if app.user %}
+	
+	{% if app.user %}
 
     {{ app.user.email }}
 
     <a  class="text-dark" href="{{ path('app_logout') }}"> Se déconnecter</a>
+	 <a  class="text-dark" href="{{ path('profile') }}"> Mon compte</a>
+
 
 {% else %}
 
-    <a class="text-dark" href="{{ path('login') }}"> Se connecter</a>
+    <a class="text-dark mx-4" href="{{ path('login') }}"> Se connecter</a>
+	<a class="text-dark" href="{{ path('app_register') }}">  S'inscrire </a>
+
 
 {% endif %}
 	</li>
